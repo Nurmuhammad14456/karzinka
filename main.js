@@ -253,11 +253,37 @@ function addUiShop(data) {
 
 addUiShop(shop);
 
+const API_URL = "https://66d34b123abcde.mockapi.io/users";
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errorMsg = document.getElementById("errorMsg");
+
+  try {
+    const res = await fetch(API_URL);
+    const users = await res.json();
+
+    const user = users.find(
+      (u) => u.email === email && u.password === password
+    );
+
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+      window.location.href = "index.html";
+    } else {
+      errorMsg.classList.remove("hidden");
+    }
+  } catch (err) {
+    console.error("Xatolik:", err);
+  }
+});
+
 // Uyga vazfa o'ta beautiful bo'lishi kerak
 
 // Mock apidan foydalanib
 // Login and register user
-
-
 
 //+ uzum market
